@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["next-env.d.js", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/FeaturesSection.jsx", "components/Footer.jsx", "components/HeroSection.jsx", "components/HowItWorksSection.jsx", "components/LeadCaptureForm.jsx", "components/Navbar.jsx", "components/PartnersSection.jsx", "components/StatsSection.jsx", "components/TestimonialsSection.jsx", "data/mock.js", "app/layout.jsx", "app/page.jsx", "app/api/leads/route.js", "tailwind.config.js", "lib/validations.js"],
+  "exclude": ["node_modules"]
+}

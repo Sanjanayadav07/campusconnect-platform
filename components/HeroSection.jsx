@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { GraduationCap, Zap, BarChart3, Star, ArrowRight, Play } from "lucide-react";
+///import { motion } from "framer-motion";
+import { Star, ArrowRight, Play } from "lucide-react";
 
 const metrics = [
   { label: "Active Students", value: "3,200+", change: "+15%", positive: true },

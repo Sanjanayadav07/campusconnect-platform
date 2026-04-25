@@ -1,9 +1,7 @@
-
 "use client";
+
 import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { Check, Loader2, AlertCircle } from "lucide-react";
 
 const teamSizeOptions = [
   { value: "", label: "Select team size" },
@@ -17,7 +15,6 @@ const teamSizeOptions = [
 
 export default function LeadCaptureForm() {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true });
 
   const [status, setStatus] = useState("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -34,7 +31,7 @@ export default function LeadCaptureForm() {
     setErrorMessage("");
 
     try {
-      const response = await fetch("/api/leads", {
+      const response = await fetch("/api/lead", { // ✅ fixed API
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -61,47 +58,73 @@ export default function LeadCaptureForm() {
 
   return (
     <section id="lead-form" ref={sectionRef} className="py-20 bg-gray-50">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto px-4">
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
+          {/* Full Name */}
           <input
             placeholder="Full Name"
             {...register("fullName", { required: "Name required" })}
             className={inputClass(errors.fullName)}
           />
+          {errors.fullName && (
+            <p className="text-red-500 text-sm">{errors.fullName.message}</p>
+          )}
 
-          {errors.fullName && <p className="text-red-500">{errors.fullName.message}</p>}
-
+          {/* Work Email */}
           <input
-            placeholder="Email"
-            {...register("email", { required: "Email required" })}
-            className={inputClass(errors.email)}
+            placeholder="Work Email"
+            {...register("workEmail", { required: "Email required" })}
+            className={inputClass(errors.workEmail)}
           />
+          {errors.workEmail && (
+            <p className="text-red-500 text-sm">{errors.workEmail.message}</p>
+          )}
 
-          <select {...register("teamSize")} className={inputClass(false)}>
+          {/* Company Name */}
+          <input
+            placeholder="Company Name"
+            {...register("companyName", { required: "Company required" })}
+            className={inputClass(errors.companyName)}
+          />
+          {errors.companyName && (
+            <p className="text-red-500 text-sm">{errors.companyName.message}</p>
+          )}
+
+          {/* Team Size */}
+          <select
+            {...register("teamSize", { required: "Select team size" })}
+            className={inputClass(errors.teamSize)}
+          >
             {teamSizeOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>
                 {opt.label}
               </option>
             ))}
           </select>
-
-          {status === "error" && (
-            <p className="text-red-500">{errorMessage}</p>
+          {errors.teamSize && (
+            <p className="text-red-500 text-sm">{errors.teamSize.message}</p>
           )}
 
+          {/* Error Message */}
+          {status === "error" && (
+            <p className="text-red-500 text-sm">{errorMessage}</p>
+          )}
+
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={status === "loading"}
-            className="bg-purple-600 text-white px-6 py-3 rounded-lg"
+            className="bg-purple-600 text-white px-6 py-3 rounded-lg w-full hover:bg-purple-700 transition"
           >
             {status === "loading" ? "Submitting..." : "Request Demo"}
           </button>
         </form>
 
+        {/* Success Message */}
         {status === "success" && (
-          <p className="text-green-600 mt-4">
+          <p className="text-green-600 mt-4 text-center font-medium">
             ✅ Form submitted successfully
           </p>
         )}
